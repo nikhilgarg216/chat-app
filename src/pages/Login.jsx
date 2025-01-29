@@ -9,8 +9,8 @@ import { loginRoute } from "../utils/APIRoutes";
 function Login() {
   const navigate = useNavigate();
   const [values, setValues] = useState({
-    username: "", 
-    password: "", 
+    username: "",
+    password: "",
   });
   const toastOption = {
     position: "bottom-right",
@@ -20,13 +20,19 @@ function Login() {
     theme: "dark",
   };
 
+  useEffect(() => {
+    if (localStorage.getItem("chat-app-user")) {
+      navigate('/')
+    }
+  }, []);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (handleValidation()) {
       const { password, username } = values;
       const { data } = await axios.post(loginRoute, {
         username,
-        password, 
+        password,
       });
       if (data.status === false) {
         toast.error(data.msg, toastOption);
@@ -39,8 +45,8 @@ function Login() {
   };
 
   const handleValidation = () => {
-    const { password,username } = values;
-    if (password ==="") {
+    const { password, username } = values;
+    if (password === "") {
       toast.error("Email & password is required", toastOption);
       return false;
     } else if (username.length === "") {
@@ -67,13 +73,13 @@ function Login() {
             name="username"
             onChange={(e) => handleChange(e)}
             min="3"
-          /> 
+          />
           <input
             type="password"
             placeholder="Password"
             name="password"
             onChange={(e) => handleChange(e)}
-          /> 
+          />
           <button type="submit">Login User</button>
           <span>
             Don't have an account ? <Link to="/register">Register</Link>

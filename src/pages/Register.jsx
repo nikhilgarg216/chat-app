@@ -22,6 +22,13 @@ function Register() {
     theme: "dark",
   };
 
+useEffect(() => {
+    if (localStorage.getItem("chat-app-user")) {
+      navigate('/')
+    }
+  }, []);
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (handleValidation()) {
@@ -109,13 +116,13 @@ function Register() {
 }
 
 const FormContainer = styled.div`
-  height: 100vh;
-  width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1rem;
   align-items: center;
+  height: 100vh;
+  width: 100vw;
+  gap: 1rem;
   background-color: #131324;
   .brand {
     display: flex;
